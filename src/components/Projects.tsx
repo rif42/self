@@ -1,11 +1,13 @@
 import { ExternalLink, Github, Youtube } from 'lucide-react';
 import SectionHeading from './SectionHeading';
+import Reveal from './Reveal';
 import { featuredProjects, otherProjects, type ProjectItem } from '../data/content';
 
-function Card({ p }: { p: ProjectItem }) {
+function Card({ p, index }: { p: ProjectItem; index: string }) {
   return (
-    <article className="rounded border border-line bg-surface p-5 transition-colors hover:border-accent">
-      <h3 className="font-medium text-ink">{p.title}</h3>
+    <article className="rounded border border-line bg-surface p-5 transition-all hover:border-accent hover:shadow-glow">
+      <p className="font-mono text-xs text-muted">{index}</p>
+      <h3 className="mt-1 font-display text-lg font-bold text-ink">{p.title}</h3>
       <p className="mt-1 font-mono text-[13px] text-muted">{p.context}</p>
       <p className="mt-3 text-[15px] leading-relaxed text-muted">{p.note}</p>
       <ul aria-label="Technologies" className="mt-4 flex flex-wrap gap-2">
@@ -54,6 +56,8 @@ function Card({ p }: { p: ProjectItem }) {
   );
 }
 
+const pad = (n: number) => `~/0${n}`;
+
 export default function Projects() {
   if (!featuredProjects.length && !otherProjects.length) return null;
   return (
@@ -63,8 +67,10 @@ export default function Projects() {
         <>
           <h3 className="mb-4 font-mono text-sm text-ink">featured</h3>
           <div className="grid gap-4">
-            {featuredProjects.map((p) => (
-              <Card key={p.title} p={p} />
+            {featuredProjects.map((p, i) => (
+              <Reveal key={p.title} delay={Math.min(i * 60, 240)}>
+                <Card p={p} index={pad(i + 1)} />
+              </Reveal>
             ))}
           </div>
         </>
@@ -73,8 +79,10 @@ export default function Projects() {
         <>
           <h3 className="mb-4 mt-10 font-mono text-sm text-ink">other noteworthy</h3>
           <div className="grid gap-4 sm:grid-cols-2">
-            {otherProjects.map((p) => (
-              <Card key={p.title} p={p} />
+            {otherProjects.map((p, i) => (
+              <Reveal key={p.title} delay={Math.min(i * 60, 240)}>
+                <Card p={p} index={pad(featuredProjects.length + i + 1)} />
+              </Reveal>
             ))}
           </div>
         </>

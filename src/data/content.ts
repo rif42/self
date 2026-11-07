@@ -10,6 +10,7 @@ export interface ExperienceItem {
   location: string;
   bullets: string[];
   links?: ExperienceLink[];
+  shipped?: string;
 }
 
 export interface ProjectItem {
@@ -69,6 +70,7 @@ export const experience: ExperienceItem[] = [
     links: [
       { label: 'make.com', href: 'http://make.com' },
     ],
+    shipped: 'pro automation training',
   },
   {
     role: 'Bootcamp Student and AI Engineer',
@@ -80,6 +82,7 @@ export const experience: ExperienceItem[] = [
       'Created and automated LeWagon’s knowledge base using scripts and agent harness.',
       'Assist in social media post content creation and management.',
     ],
+    shipped: 'knowledge-base agent harness',
   },
   {
     role: 'Lead AI Engineer and Lecturer',
@@ -99,6 +102,7 @@ export const experience: ExperienceItem[] = [
       { label: 'absen-qr', href: 'https://github.com/rif42/absen-qr' },
       { label: 'stem-cell confluency', href: 'https://github.com/rif42/phantast-py-stem-cell-confluency' },
     ],
+    shipped: 'devs to 150% efficiency',
   },
   {
     role: 'Project Manager and Fullstack Developer',
@@ -115,6 +119,7 @@ export const experience: ExperienceItem[] = [
     links: [
       { label: 'solutionbank-mobile', href: 'https://github.com/solution-bank/solutionbank-mobile' },
     ],
+    shipped: 'PRD → deploy, Stripe custom cut',
   },
   {
     role: 'English Teacher',
@@ -125,6 +130,7 @@ export const experience: ExperienceItem[] = [
       'Teach English in private and group classes with students of all ages.',
       'Cultivate a relaxing, comfortable, and encouraging environment in every class.',
     ],
+    shipped: 'all-ages English classes',
   },
   {
     role: 'Programming Mentor (Roblox, JS, Python, AI)',
@@ -138,6 +144,7 @@ export const experience: ExperienceItem[] = [
     links: [
       { label: 'teaching sample', href: 'https://www.youtube.com/watch?v=0p3CLpqwdzU' },
     ],
+    shipped: '500+ sessions, Teacher of the Year (MENA)',
   },
   {
     role: 'Frontend Engineer',
@@ -156,6 +163,7 @@ export const experience: ExperienceItem[] = [
       { label: 'Teletubbies', href: 'https://sanctuary.kindredlabs.ai/event/teletubbies' },
       { label: 'AxieInfinity', href: 'https://blog.axieinfinity.com/p/axiepals' },
     ],
+    shipped: 'Gemini prototype in 3 days',
   },
   {
     role: 'React Native Front-End Developer',
@@ -171,6 +179,7 @@ export const experience: ExperienceItem[] = [
       { label: 'Play Store', href: 'https://play.google.com/store/apps/details?id=com.lets_flip&pli=1' },
       { label: 'Scorecampus', href: 'https://www.scorecampus.com/' },
     ],
+    shipped: 'v0.57 → v0.68.5 on Play Store',
   },
 ];
 

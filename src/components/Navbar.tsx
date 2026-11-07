@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Moon, Sun, FileText } from 'lucide-react';
+import { celebrate } from '../lib/confetti';
+import { toast } from '../lib/toast';
 
 const LINKS = [
   { id: 'about', label: 'about' },
@@ -20,12 +22,14 @@ function getInitialTheme(): 'dark' | 'light' {
 export default function Navbar() {
   const [active, setActive] = useState<string>('');
   const [theme, setTheme] = useState<'dark' | 'light'>(getInitialTheme);
+  const logoTaps = useRef<number[]>([]);
+  const themeFlips = useRef<number[]>([]);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     window.localStorage.setItem(THEME_KEY, theme);
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0a0f0d' : '#fafaf9');
+    if (meta) meta.setAttribute('content', theme === 'dark' ? '#0a0f0d' : '#faf8f2');
   }, [theme]);
 
   useEffect(() => {
@@ -43,11 +47,32 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
+  const onLogoTap = () => {
+    const now = Date.now();
+    logoTaps.current = [...logoTaps.current, now].filter((t) => now - t < 3000);
+    if (logoTaps.current.length >= 6) {
+      logoTaps.current = [];
+      void celebrate(false);
+      toast('6× — curious. Teachers like that. Now type `teach`.');
+    }
+  };
+
+  const toggleTheme = () => {
+    setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
+    const now = Date.now();
+    themeFlips.current = [...themeFlips.current, now].filter((t) => now - t < 5000);
+    if (themeFlips.current.length >= 6) {
+      themeFlips.current = [];
+      toast('parity mode: indecisive teacher detected');
+    }
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-bg/85 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-prose items-center justify-between gap-4 px-6">
         <a
           href="#top"
+          onClick={onLogoTap}
           className="font-mono text-sm font-semibold text-ink hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
         >
           ~/rifky
@@ -59,7 +84,7 @@ export default function Navbar() {
                 <a
                   href={`#${l.id}`}
                   aria-current={active === l.id ? 'true' : undefined}
-                  className={`min-h-[44px] inline-flex items-center transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-accent ${
+                  className={`inline-flex min-h-[44px] items-center transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-accent ${
                     active === l.id ? 'text-accent' : 'text-muted'
                   }`}
                 >
@@ -72,7 +97,7 @@ export default function Navbar() {
         <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
-            onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
+            onClick={toggleTheme}
             aria-label={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
             className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded text-muted transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-accent"
           >
